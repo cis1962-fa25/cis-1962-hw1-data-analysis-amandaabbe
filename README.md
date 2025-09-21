@@ -1,3 +1,4 @@
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/PA8fMuFu)
 # Homework 1 AI Synthesis Activity
 
 Only complete one of the assignments below! You can delete the other assignment in this document once you've made your choice.
