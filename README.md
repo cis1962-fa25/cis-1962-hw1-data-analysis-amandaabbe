@@ -30,19 +30,13 @@ Only complete one of the assignments below! You can delete the other assignment 
 
 > Explain some improvement you want to make within your code. Perhaps you have a code block that could be more concise, or a part of your code could be improved with a library or be performed with a more efficient algorithm.
 
-My code works and passes tests, but I want to reduce mutation and duplication in the sentiment analysis step:
--  Avoid mutating review.sentiment inside the analysis functions. Instead, create a derived array that adds sentiment immutably.
-- DRY up grouping logic: sentimentAnalysisApp and sentimentAnalysisLang share almost identical “count positives/neutral/negatives by key” logic. I can factor that into one reusable helper.
-- Small polish:
-    - Extract rating thresholds to named constants.
-    - Add a tiny boolean parser for verified_purchase that’s robust to casing (True, true, etc.).
-    - Keep all functions pure and return new structures instead of modifying inputs.
+My code works and passes tests, but I'd improve the sentiment analysis section by reducing mutation and duplication. Instead of mutating review.sentiment, I'd produce a derived array that adds a sentiment field immutably. I'd also DRY up the nearly identical "count positive/neutral/negative by key" logic in sentimentAnalysisApp and sentimentAnalysisLang into one reusable helper. As small polish, I'd extract rating thresholds to named constants and use a case-insensitive boolean parser for verified_purchase. The goal is to keep functions pure and return new structures without side effects.
 
 ### Part 2
 
 > Ask AI how to improve your code, by picking a part of your program you are interested in improving and asking something along the lines of "how can I improve this code?" This does not have to be verbatim; you could ask more specific questions for improvement, like "what JavaScript libraries could improve the efficiency of my code?" Screenshot or link the response.
 
-I asked AI: "Here’s my working JS for sentiment analysis on a cleaned reviews array. How can I refactor it to avoid mutation and remove duplication between ‘by app’ and ‘by language’? Please keep it vanilla JS (no extra libraries), O(n), and ESLint-friendly (prefer-const, consistent destructuring, no var). Return production-ready code."
+I asked AI: "Here's my working JS for sentiment analysis on a cleaned reviews array. How can I refactor it to avoid mutation and remove duplication between 'by app' and 'by language'? Please keep it vanilla JS (no extra libraries), O(n), and ESLint-friendly (prefer-const, consistent destructuring, no var). Return production-ready code."
 
 Its output:
 
@@ -82,6 +76,6 @@ const sentimentAnalysisLang = (cleaned) =>
 
 > Evaluate the response the AI generates. You may need to do some research to do this evaluation, to see if the syntax generates correctly or if any libraries the AI suggests are appropriate for the current task. Report on whether the AI's solution fits within your project, or if it would need modifications to work properly.
 
-The refactor the AI proposed is logically correct and would preserve behavior: it keeps the same sentiment thresholds, returns the same output shapes for both app and language, and should pass the existing tests. It’s also clean and idiomatic—arrow functions, destructuring, const everywhere, and named constants make the code self-documenting and lint-friendly. That said, it adds another traversal via withSentiment, which pushes the work from a single pass to roughly two passes; on 2,514 rows the cost is negligible, but it’s still extra complexity and an extra abstraction layer (tallySentiments) for what is, in this assignment, a simple counting task. My current implementation is already clear, pure enough for the scope, passes all tests, and conforms to the style guide, so the marginal win from refactoring right now is low, and changing structure right before grading risks unintended drift from the autograder’s expectations. Bottom line: the suggestion is solid and I’d consider it in a longer-lived codebase, but I’m not adopting it for this submission.
+The refactor the AI proposed is logically correct and would preserve behavior: it keeps the same sentiment thresholds, returns the same output shapes for both app and language, and should pass the existing tests. It's also clean and idiomatic—arrow functions, destructuring, const everywhere, and named constants make the code self-documenting and lint-friendly. That said, it adds another traversal via withSentiment, which pushes the work from a single pass to roughly two passes; on 2,514 rows the cost is negligible, but it's still extra complexity and an extra abstraction layer (tallySentiments) for what is, in this assignment, a simple counting task. My current implementation is already clear, passes all tests, and conforms to the style guide, so the marginal win from refactoring right now is low, and changing structure right before grading risks unintended drift from the autograder's expectations. The suggestion is solid and I’d consider it in a longer-lived codebase, but I'm not adopting it for this submission.
 
 **_ You do NOT need to use the AI suggestion within your final submission, if your code already works properly. If the scope of your inquiry in this activity leads you to replace parts of your code, switch to the other version of this activity instead. _**
